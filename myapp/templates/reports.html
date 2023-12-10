@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatório{% endblock %}
+
+{% block content %}
+
+<div class="container"> 
+
+    <!-- Tabela com todas informações de Registro de Locação -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Registro Inicial</th>
+                <th scope="col">Registro Final</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Imovel</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Locado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for immobile in immobiles %}
+            <tr>
+                <td scope="row">{{immobile.id}}</td>
+
+                <td scope="row">{% for location in immobile.reg_location.all %}{{location.dt_start|date:"d/m/Y"}}{% endfor %}</td>
+                <td scope="row">{% for location in immobile.reg_location.all %}{{location.dt_end|date:"d/m/Y"}}{% endfor %}</td>
+                <td scope="row">{% for location in immobile.reg_location.all %}{{location.client}}{% endfor %}</td>
+
+                <td scope="row">{{immobile.code}}</td>
+                <td scope="row">{{immobile.type_item}}</td>
+                <td scope="row">R$ {{immobile.price}}</td>
+
+                <td scope="row">
+                    {% if immobile.is_locate == True %}
+                    <i class="fas fa-check-circle fa-2x link-success"></i>
+                    {% else %}
+                    <i class="fas fa-minus-circle fa-2x link-danger"></i>
+                    {% endif %} 
+                </td>
+
+            </tr>  
+            {% endfor %}
+        </tbody>
+    </table> 
+</div>
+
+{% endblock %}
